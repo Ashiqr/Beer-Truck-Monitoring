@@ -1,0 +1,26 @@
+{
+  "name": "beer-truck-monitoring",
+  "version": "1.0.0",
+  "description": "Monitors the temperature inside a truck container",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashiqr/Beer-Truck-Monitoring.git"
+  },
+  "author": "Ashiq Ramlucken",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashiqr/Beer-Truck-Monitoring/issues"
+  },
+  "homepage": "https://github.com/Ashiqr/Beer-Truck-Monitoring#readme",
+  "dependencies": {
+    "diet": "^0.16.0"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0"
+  }
+}
