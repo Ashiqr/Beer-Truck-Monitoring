@@ -7,14 +7,29 @@ const beerConfigBasic = [
         {'Id': 'beer6', 'Name' : 'Pale Ale', 'Minimum': 4, 'Maximum': 6},
     ];
 
+const Status = {
+    'Normal' : 0,
+    'TooLow' : 1,
+    'TooHigh': 2,
+    'Fault': 3
+}
+
+var history = [];
 var beerCurrentCargo = [];
 
 function GetCargoConfigBasic(){
     return beerConfigBasic;
 }
 
-function GetCargo(){
-    return beerCurrentCargo;
+function GetCargoById(Id){
+    return beerCurrentCargo.find(({id}) => Id === Id);
+}
+
+function GetCargoByIndex(Index){
+    if (Index < 0 || Index >= beerCurrentCargo.length){
+        return null;
+    }
+    return beerCurrentCargo[Index];
 }
 
 function SetCargo(beers){
@@ -25,10 +40,12 @@ function SetCargo(beers){
     beers.forEach(beer => {
         var index = beerCurrentCargo.findIndex(b => b.Id === beer.Id)
         if (index === -1){
-            beerCurrentCargo.push({'Id': beer.Id, 'Temperature' : beer.Temperature});
+            beerCurrentCargo.push({'Id': beer.Id, 'Temperature' : beer.Temperature, "Status": beer.Status, "LastUpdated": beer.LastUpdated});
         }
         else{
             beerCurrentCargo[index].Temperature = beer.Temperature;
+            beerCurrentCargo[index].Status = beer.Status;
+            beerCurrentCargo[index].LastUpdated = beer.LastUpdated;
         }
         count++;
     });
@@ -36,5 +53,7 @@ function SetCargo(beers){
 }
 
 exports.GetCargoConfigBasic = GetCargoConfigBasic;
-exports.GetCargo = GetCargo;
+exports.GetCargoById = GetCargoById;
+exports.GetCargoByIndex = GetCargoByIndex;
 exports.SetCargo = SetCargo;
+exports.Status = Status;
