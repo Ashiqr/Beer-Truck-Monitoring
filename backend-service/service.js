@@ -1,56 +1,70 @@
 var https = require('https');
-var dataLayer = require('../backend-data-layer/data-layer');
 
-function Driver(){
-    GetTemperature(0);
-}
+class Service{
+    constructor(DataLayer) {
+        this.dataLayer = DataLayer;
+    }
 
-function GetTemperature (Index) {
-    var beer = dataLayer.GetCargoById(Index);
-    if (beer){
-        var options = {
-            host: 'beer-truck',
-            path: 'https://temperature-sensor-service.herokuapp.com/sensor/' + beer.Id,
-            method: 'GET'
-        };
-        var req = https.request(options, function(res) {
-            res.setEncoding('utf-8');
-        
-            var responseString = '';
-        
-            res.on('error', function(responseString) {
-                console.log(responseString);
-                UpdateStatus(Index, beer.Id, null, dataLayer.Status.Fault);
+    Drive(){
+        try{
+            this.GetTemperature(0);
+            return this.dataLayer;
+        }
+        catch(ex){
+            console.log(ex);
+        }
+    }
+
+    GetTemperature(Index) {
+        var beer = this.dataLayer.GetCargoByIndex(Index);
+        if (beer){
+            var URL = 'https://temperature-sensor-service.herokuapp.com/sensor/' + beer.Id;
+            https.get(URL, (resp) => {            
+                let stream = '';
+                resp.on('data', (chunk) => {
+                    stream += chunk;
+                });
+
+                resp.on('end', () => {
+                    var data = JSON.parse(stream);
+                    this.Success(Index, beer.Id, data.temperature)
+                });
+            }).on("error", (err) => {
+                this.Error(Index, beer.Id);
             });
+        }
+    }
 
-            res.on('end', function(responseString) {
-                var responseReading = JSON.parse(responseString);
-                EvaluateTemperature(Index, beer.Id, responseReading.temperature);
-            });
-        });
+    Success(Index, Id, Temperature){
+        var beer = this.dataLayer.GetCargoConfigById(Id);
+        if (!beer){
+            throw 'Invalid Id: ' + Id;
+        }
+        var status = this.EvaluateTemperature(beer, Temperature);
+        this.UpdateStatus(Index, Id, Temperature, status);
+        this.GetTemperature(++Index);
+    }
+
+    Error(Index, Id){
+        this.UpdateStatus(Index, Id, null, dataLayer.Status.Fault);
+        this.GetTemperature(++Index);
+    }
+
+    EvaluateTemperature(Beer, Temperature){
+        var status = this.dataLayer.Status.Normal;
+        if (Temperature < Beer.Minimum){
+            status = this.dataLayer.Status.TooLow;
+        }
+        else if (Temperature > Beer.Maximum){
+            status = this.dataLayer.Status.TooHigh;
+        }
+        return status;
+    }
+
+    UpdateStatus(Index, Id, Temperature, Status){
+        var beer = {'Id': Id, 'Temperature' : Temperature, 'Status': Status, 'LastUpdated': new Date()};
+        console.log(beer);
+        this.dataLayer.SetCargo([beer]);
     }
 }
-
-function EvaluateTemperature(Index, Id, Temperature){
-    var beer =  dataLayer.GetCargoById(Id);
-    if (!beer){
-        throw 'Invalid Id: ' + Id;
-    }
-
-    var status = dataLayer.Status.Normal;
-    if (Temperature < beer.Minimum){
-        status = dataLayer.Status.TooLow;
-    }
-    else if (Temperature > beer.Maximum){
-        status = dataLayer.Status.TooHigh;
-    }
-    UpdateStatus(Index, Id, Temperature, status);
-}
-
-function UpdateStatus(Index, Id, Temperature, Status){
-    var beer = {'Id': Id, 'Temperature' : Temperature, 'Status': Status, 'LastUpdated': new Date()};
-    dataLayer.SetCargo([beer]);
-    GetTemperature(++Index);
-}
-
-exports.GetCargoConfig = GetCargoConfig;
+module.exports = Service;
