@@ -8,7 +8,7 @@ class DataLayer{
             {'Id': 'beer4', 'Name' : 'Stout', 'Minimum': 6, 'Maximum': 8},
             {'Id': 'beer5', 'Name' : 'Wheat beer', 'Minimum': 3, 'Maximum': 5},
             {'Id': 'beer6', 'Name' : 'Pale Ale', 'Minimum': 4, 'Maximum': 6},
-            ];
+        ];
 
         this.Status = {
             'Normal' : 0,
@@ -52,7 +52,8 @@ class DataLayer{
         beers.forEach(beer => {
             var index = this.beerCurrentCargo.findIndex(b => b.Id === beer.Id)
             if (index === -1){
-                this.beerCurrentCargo.push({'Id': beer.Id, 'Temperature' : beer.Temperature, "Status": beer.Status, "LastUpdated": beer.LastUpdated});
+                this.beerCurrentCargo.push({'Id': beer.Id, 'Temperature' : beer.Temperature, 
+                "Status": beer.Status, "LastUpdated": beer.LastUpdated, 'Name': beer.Name});
             }
             else{
                 this.beerCurrentCargo[index].Temperature = beer.Temperature;
@@ -70,6 +71,23 @@ class DataLayer{
             this.history = [];
         }
         this.history.push(Beer);
+    }
+
+    GetHistory(BeerId){
+        if (!BeerId || BeerId === '' || BeerId.toLowerCase() === 'all'){
+            return this.SortHistory(this.history);
+        }
+        else{
+            return this.SortHistory(this.FilterHistory(this.history, BeerId));
+        }
+    }
+
+    SortHistory(Data){
+        return Data.slice().sort((a, b) =>  b.LastUpdated - a.LastUpdated);
+    }
+
+    FilterHistory(Data, Id){
+        return Data.filter((beer) => beer.Id === Id);
     }
 }
 module.exports = DataLayer;

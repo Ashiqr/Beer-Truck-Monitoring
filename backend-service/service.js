@@ -46,7 +46,7 @@ class Service{
     }
 
     Error(Index, Id){
-        this.UpdateStatus(Index, Id, null, dataLayer.Status.Fault);
+        this.UpdateStatus(Index, Id, null, this.dataLayer.Status.Fault);
         this.GetTemperature(++Index);
     }
 
@@ -63,7 +63,6 @@ class Service{
 
     UpdateStatus(Index, Id, Temperature, Status){
         var beer = {'Id': Id, 'Temperature' : Temperature, 'Status': Status, 'LastUpdated': new Date()};
-        console.log(beer);
         this.dataLayer.SetCargo([beer]);
     }
 }

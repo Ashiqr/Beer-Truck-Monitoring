@@ -1,0 +1,163 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Cargo Monitoring</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/nalika-icon.css">
+    <link rel="stylesheet" href="css/meanmenu.min.css">
+    <link rel="stylesheet" href="css/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="css/metisMenu/metisMenu-vertical.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="left-sidebar-pro">
+        <nav id="sidebar" class="">
+            <div class="sidebar-header">
+                <a href="/"><h3>Monitoring</h3></a>
+            </div>
+			
+            <div class="left-custom-menu-adp-wrap comment-scrollbar">
+                <nav class="sidebar-nav left-sidebar-menu-pro">
+                    <ul class="metismenu" id="menu1">
+                        <li class="active">
+                            <ul class="submenu-angle" aria-expanded="true">
+                                <li><a title="Dashboard" href="/"><span class="mini-sub-pro">Dashboard</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+    <!-- Start Welcome area -->
+    <div class="all-content-wrapper">
+        <div class="header-advance-area">
+            <div class="header-top-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="header-top-wraper">
+                                <div class="row">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="breadcome-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="breadcome-list">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <div class="breadcomb-wp">
+											<div class="breadcomb-icon">
+												<i class="icon nalika-home"></i>
+											</div>
+											<div class="breadcomb-ctn">
+												<h2>Monitoring</h2>
+												<p>Cargo Temperature Monitoring</p>
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="currentStatus" class="section-admin container-fluid">
+            <div class="row admin text-center">
+                <div class="row col-md-12">
+                    <div class="col-xs-3 cus-gh-hd-pro">
+                        <h2 :class="{'bg-darkgreen':(serverStatus == 0), 'bg-red':(serverStatus == 1)}">
+                            {{serverStatusMessage}}
+                        </h2>
+                    </div>
+                    
+                </div>
+                <div class="row col-md-12">
+                    <div v-for="beer in firstThree" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="admin-content analysis-progrebar-ctn res-mg-t-15" v-on:click="getHistory(beer.Id, beer.Name)">
+                            <h4 class="text-left text-uppercase"><b>{{beer.Name}}</b></h4>
+                            <div class="row vertical-center-box vertical-center-box-tablet">
+                                <div class="col-xs-3 cus-gh-hd-pro">
+                                    <h2 class="text-left">{{beer.Temperature}}&#176;</h2>
+                                </div>
+                                <div class="col-xs-9 cus-gh-hd-pro no-margin">
+                                    <h2 :class="{'bg-red':(beer.Status == 2), 'bg-lightblue':(beer.Status == 1), 'bg-yellow':(beer.Status == 3)}">
+                                        {{beer.Message}}
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="progress progress-mini">
+                                <div :style="{width: beer.Percent + '%'}" class="progress-bar bg-green"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-12" style="margin-block: 5px;"></div>
+                <div class="row col-md-12">
+                    <div v-for="beer in lastThree" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="admin-content analysis-progrebar-ctn res-mg-t-15" v-on:click="getHistory(beer.Id, beer.Name)">
+                            <h4 class="text-left text-uppercase"><b>{{beer.Name}}</b></h4>
+                            <div class="row vertical-center-box vertical-center-box-tablet">
+                                <div class="col-xs-3 cus-gh-hd-pro">
+                                    <h2 class="text-left">{{beer.Temperature}}&#176;</h2>
+                                </div>
+                                <div class="col-xs-9 cus-gh-hd-pro">
+                                    <h2 :class="{'bg-red':(beer.Status == 2), 'bg-lightblue':(beer.Status == 1), 'bg-yellow':(beer.Status == 3)}">
+                                        {{beer.Message}}
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="progress progress-mini">
+                                <div :style="{width: beer.Percent + '%'}" class="progress-bar bg-green"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-sales-area mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject text-uppercase"><b>Temperature History</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="curved-line-chart" class="flot-chart-sts flot-chart curved-chart-statistic"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/flot/jquery.flot.js"></script>
+    <script src="js/flot/jquery.flot.resize.js"></script>
+    <script src="js/flot/curvedLines.js"></script>
+</body>
+
+</html>
