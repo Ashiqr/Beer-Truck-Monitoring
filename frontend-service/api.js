@@ -1,3 +1,4 @@
+'use strict'
 class API {
     constructor(DataLayer) {
         this.dataLayer = DataLayer;
@@ -16,19 +17,19 @@ class API {
         data.sort((a, b) =>  b.Status - a.Status);
         data.forEach(beer => {
             switch(beer.Status){
-                case 0: {
+                case this.dataLayer.Status.Normal: {
                     beer.Message = 'Normal';
                     break;
                 }
-                case 1: {
+                case this.dataLayer.Status.TooLow: {
                     beer.Message = 'Low';
                     break;
                 }
-                case 2: {
+                case this.dataLayer.Status.TooHigh: {
                     beer.Message = 'High';
                     break;
                 }
-                case 3: {
+                case this.dataLayer.Status.Fault: {
                     beer.Message = 'Sensor Fault';
                     break;
                 }

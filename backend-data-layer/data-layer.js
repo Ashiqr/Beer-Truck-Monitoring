@@ -1,14 +1,11 @@
+'use strict'
+
+const basicData = require('./basicData.json');
+
 class DataLayer{
-    
+   
     constructor() {
-        this.beerConfigBasic = [
-            {'Id': 'beer1', 'Name' : 'Pilsner', 'Minimum': 4, 'Maximum': 6},
-            {'Id': 'beer2', 'Name' : 'IPA', 'Minimum': 5, 'Maximum': 6},
-            {'Id': 'beer3', 'Name' : 'Lager', 'Minimum': 4, 'Maximum': 7},
-            {'Id': 'beer4', 'Name' : 'Stout', 'Minimum': 6, 'Maximum': 8},
-            {'Id': 'beer5', 'Name' : 'Wheat beer', 'Minimum': 3, 'Maximum': 5},
-            {'Id': 'beer6', 'Name' : 'Pale Ale', 'Minimum': 4, 'Maximum': 6},
-        ];
+        this.beerConfigBasic = basicData;
 
         this.Status = {
             'Normal' : 0,

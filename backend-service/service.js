@@ -1,4 +1,6 @@
+'use strict'
 var https = require('https');
+const configuration = require('../configuration.json');
 
 class Service{
     constructor(DataLayer) {
@@ -18,7 +20,7 @@ class Service{
     GetTemperature(Index) {
         var beer = this.dataLayer.GetCargoByIndex(Index);
         if (beer){
-            var URL = 'https://temperature-sensor-service.herokuapp.com/sensor/' + beer.Id;
+            var URL = configuration.SensorURL + beer.Id;
             https.get(URL, (resp) => {            
                 let stream = '';
                 resp.on('data', (chunk) => {
