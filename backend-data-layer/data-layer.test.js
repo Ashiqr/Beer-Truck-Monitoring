@@ -7,12 +7,7 @@ test('Number of Items to be 6', () => {
 
 test('Insert beer2', () => {
     var dataLayer = new DataLayer();
-    expect(dataLayer.SetCargo([{'Id': 'beer2', 'Temperature' : null}])).toBe(1);
-});
-
-test('Update beer2 temperature to 4', () => {
-    var dataLayer = new DataLayer();
-    expect(dataLayer.SetCargo([{'Id': 'beer2', 'Temperature' : 4}])).toBe(1);
+    expect(dataLayer.SetCargo([{'Id': 'beer2', 'Temperature' : null}])).toBe(undefined);
 });
 
 test('beer2 temperature must be 4', () => {

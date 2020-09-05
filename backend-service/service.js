@@ -106,3 +106,4 @@ function UpdateStatus(Id, Temperature, Status){
 
 
 exports.Drive = Drive;
+exports.EvaluateTemperature = EvaluateTemperature;
