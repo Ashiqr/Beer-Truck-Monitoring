@@ -45,9 +45,8 @@ class DataLayer{
         if (!beers || !Array.isArray(beers))
             throw 'Invalid Beer Data';
 
-        var count = 0;
         beers.forEach(beer => {
-            var index = this.beerCurrentCargo.findIndex(b => b.Id === beer.Id)
+            var index = this.beerCurrentCargo.findIndex(b => b.Id === beer.Id);
             if (index === -1){
                 this.beerCurrentCargo.push({'Id': beer.Id, 'Temperature' : beer.Temperature, 
                 "Status": beer.Status, "LastUpdated": beer.LastUpdated, 'Name': beer.Name});
@@ -58,9 +57,8 @@ class DataLayer{
                 this.beerCurrentCargo[index].LastUpdated = beer.LastUpdated;
             }
             this.AddToHistory({'Id': beer.Id, 'Temperature' : beer.Temperature, "Status": beer.Status, "LastUpdated": beer.LastUpdated})
-            count++;
         });
-        return count;
+        return;
     }
 
     AddToHistory(Beer){

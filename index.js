@@ -4,7 +4,10 @@ var static = require('diet-static')({ path: './frontend/static' })
 const DataLayer = require('./backend-data-layer/data-layer');
 const Service = require('./backend-service/service');
 const API = require('./frontend-service/api');
+const configuration = require('./configuration.json');
 
+var dataLayer = new DataLayer();
+var api = new API(dataLayer);
 var app = server();
 app.listen('http://localhost:8000');
 
@@ -56,11 +59,24 @@ app.missing(function($){
 
 app.footer(static);
 
-console.log('Starting monitoring service')
-var dataLayer = new DataLayer();
-var api = new API(dataLayer);
-setInterval(() => {
-    var service = new Service(dataLayer);
-    dataLayer = service.Drive();
-}, 60000);
+console.log('Starting monitoring service');
+
+function Start(){
+    var interval = parseInt(configuration.ServerInterval);
+    if(!isNaN(interval)){
+        setInterval(() => {
+            Service.Drive(dataLayer).then((result) => {
+                dataLayer.SetCargo(result);
+                return;
+            });
+        }, Math.abs(interval));
+        return;
+    }
+    else{
+        //use default
+        Monitor(60000);
+    }
+}
+Start();
+
 console.log('Monitoring service running');

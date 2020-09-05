@@ -1,3 +1,4 @@
 {
-    "SensorURL": "https://temperature-sensor-service.herokuapp.com/sensor/"
+    "SensorURL": "https://temperature-sensor-service.herokuapp.com/sensor/",
+    "ServerInterval": 60000
 }
