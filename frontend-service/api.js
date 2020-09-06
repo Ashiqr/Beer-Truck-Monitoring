@@ -14,7 +14,7 @@ class API {
 
     GetDashboardData(){
         var data = this.dataLayer.GetCargo();
-        data.sort((a, b) =>  b.Status - a.Status);
+        data.sort((a, b) => b.Status - a.Status);
         data.forEach(beer => {
             switch(beer.Status){
                 case this.dataLayer.Status.Normal: {

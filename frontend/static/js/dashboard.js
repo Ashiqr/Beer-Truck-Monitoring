@@ -110,9 +110,8 @@ var app = new Vue({
             });
         },
         checkServer : function () {
-            var now = new Date();
             var latestDate = this.beers[0] ? new Date(this.beers[0].LastUpdated) : new Date('2020-01-01');
-            var difference = Math.abs(now - latestDate);
+            var difference = Math.abs(new Date() - latestDate);
             if (difference > (1000 * 60 * 2)){
                 this.serverStatus = 1;
                 this.serverStatusMessage = 'Server - Offline';

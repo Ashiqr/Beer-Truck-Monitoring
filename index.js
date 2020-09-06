@@ -22,15 +22,6 @@ app.get('/', function($){
     })
 });
 
-app.get('/cargo/data', function($){
-    var dash = dataLayer.GetCargo();
-    var result = '';
-    dash.forEach(beer => {
-        result += beer.Id + ' ' + beer.Status + '< br/>';
-    });
-    $.end(result);
-});
-
 app.get('/configuration/data', function($){
     $.data = api.GetConfigurationData();
     $.json();
@@ -63,19 +54,20 @@ console.log('Starting monitoring service');
 
 function Start(){
     var interval = parseInt(configuration.ServerInterval);
-    if(!isNaN(interval)){
-        setInterval(() => {
-            Service.Drive(dataLayer).then((result) => {
-                dataLayer.SetCargo(result);
-                return;
-            });
-        }, Math.abs(interval));
-        return;
+
+    if(isNaN(interval)){
+        interval = 60000;
     }
     else{
-        //use default
-        Monitor(60000);
+        interval = Math.abs(interval);
     }
+    setInterval(() => {
+        Service.Drive(dataLayer).then((result) => {
+            dataLayer.SetCargo(result);
+            return;
+        });
+    }, interval);
+    return;
 }
 Start();
 

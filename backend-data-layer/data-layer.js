@@ -11,7 +11,7 @@ class DataLayer{
             'Normal' : 0,
             'TooLow' : 1,
             'TooHigh': 2,
-            'Fault': 3
+            'Fault'  : 3
         }
         this.history = [];
         this.beerCurrentCargo = [];
@@ -56,7 +56,7 @@ class DataLayer{
                 this.beerCurrentCargo[index].Status = beer.Status;
                 this.beerCurrentCargo[index].LastUpdated = beer.LastUpdated;
             }
-            this.AddToHistory({'Id': beer.Id, 'Temperature' : beer.Temperature, "Status": beer.Status, "LastUpdated": beer.LastUpdated})
+            this.AddToHistory({'Id': beer.Id, 'Temperature' : beer.Temperature, "Status": beer.Status, "LastUpdated": beer.LastUpdated});
         });
         return;
     }

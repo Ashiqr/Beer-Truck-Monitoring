@@ -1,8 +1,8 @@
 [
-    {"Id": "beer1", "Name" : "Pilsner", "Minimum": 4, "Maximum": 6},
-    {"Id": "beer2", "Name" : "IPA", "Minimum": 5, "Maximum": 6},
-    {"Id": "beer3", "Name" : "Lager", "Minimum": 4, "Maximum": 7},
-    {"Id": "beer4", "Name" : "Stout", "Minimum": 6, "Maximum": 8},
-    {"Id": "beer5", "Name" : "Wheat beer", "Minimum": 3, "Maximum": 5},
-    {"Id": "beer6", "Name" : "Pale Ale", "Minimum": 4, "Maximum": 6}
+    {"Id": "beer1", "Minimum": 4, "Maximum": 6, "Name" : "Pilsner"},
+    {"Id": "beer2", "Minimum": 5, "Maximum": 6, "Name" : "IPA"},
+    {"Id": "beer3", "Minimum": 4, "Maximum": 7, "Name" : "Lager"},
+    {"Id": "beer4", "Minimum": 6, "Maximum": 8, "Name" : "Stout"},
+    {"Id": "beer5", "Minimum": 3, "Maximum": 5, "Name" : "Wheat beer"},
+    {"Id": "beer6", "Minimum": 4, "Maximum": 6, "Name" : "Pale Ale"}
 ]

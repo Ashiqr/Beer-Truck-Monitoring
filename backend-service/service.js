@@ -3,7 +3,6 @@ var https = require('https');
 const configuration = require('../configuration.json');
 const { resolve } = require('path');
 
-
 function Drive(DataLayer) {
     try{
         return new Promise(async function (resolve) {
@@ -26,30 +25,6 @@ function Drive(DataLayer) {
             while(index < beerCount);
 
             resolve(result);
-
-            // function register (beer, index){
-            //     if (beer){
-            //         result.push(beer);
-            //         GetNext(++index);
-            //     }
-            //     else{
-            //         beers = null;
-            //         resolve(result);
-            //         result = null;
-            //     }
-            // }
-            // function GetNext(index){
-            //     if (beers[index]){
-            //         GetTemperature(DataLayer, beers[index]).then((x) => {
-            //             // console.log(x);
-            //             register(x, index);
-            //         });
-            //     }
-            //     else{
-            //         register(null, index);
-            //     }
-            // }
-            // GetNext(0);
         });
     }
     catch(ex){
@@ -69,7 +44,6 @@ function GetTemperature(Id) {
                 var data = JSON.parse(stream);
                 stream = null;
                 resolve(data.temperature);
-                data = null;
             });
         }).on("error", (err) => {
             resolve(null);
@@ -103,7 +77,6 @@ function EvaluateTemperature(DataLayer, Beer, Temperature){
 function UpdateStatus(Id, Temperature, Status){
     return {'Id': Id, 'Temperature' : Temperature, 'Status': Status, 'LastUpdated': new Date()};
 }
-
 
 exports.Drive = Drive;
 exports.EvaluateTemperature = EvaluateTemperature;
